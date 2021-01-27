@@ -1,18 +1,46 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <div class="container">
+      <!-- //slider compnetent-->
+      <div class="row">
+        <Slider />
+        <FeaturedGame :games="games" />
+        <MostList     :games="games" />
+        <MostList     :games="games" />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
-
+import Slider from '../components/game/Slider'
+import FeaturedGame from '../components/game/FeaturedGame'
+import MostList from '../components/game/MostList'
 export default {
   name: "Home",
+  // props:['games'],
+  data(){
+    return{
+      games:null
+    }
+  },
   components: {
-    HelloWorld
+    Slider,
+    FeaturedGame,
+    MostList,
+
+  },mounted () { 
+  fetch('https://jsonplaceholder.typicode.com/users/')
+  .then(response => response.json())
+  .then(json => this.games=json)
+  .then(()=>{console.log(this.games[0])})
+      
   }
 };
 </script>
+<style>
+.home{
+     min-height: calc(100vh - 175px);
+}
+</style>
